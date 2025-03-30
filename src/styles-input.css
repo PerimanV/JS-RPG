@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+body {
+    background-image: url(/public/pixel_mountains.jpg);
+  }
+  
+  #text {
+    background-color: black;
+    color: white;
+    padding: 10px;
+  }
+  
+  #game {
+    background-image: linear-gradient(to bottom,grey,40%,green);
+  }
+  
+  #monsterStats {
+    display: none;
+    border: 1px black solid;
+    color: white;
+    padding: 5px;
+    background-color: red;
+  }
+  
+  @layer components {
+    .stat {
+        @apply m-2 p-2 font-bold border border-black shadow-lg rounded flex items-center; 
+    }
+    .button {
+        @apply m-2 p-1 font-semibold  shadow-md rounded-md text-black border cursor-pointer ;
+    }
+  }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>RPG - Dragon Repeller</title>
+  <link rel="stylesheet" href="styles-output.css">
+
+</head>
+
+<body>
+<div id="game" class="mt-6 w-1/2 border border-black rounded shadow-lg rounded-lg justify-self-center">
+  <div id="stats" class="flex justify-center gap-5">
+    <div class="stat flex items-center">
+      <span class="underline">XP:</span>
+      <span id="xpText" class="ml-2">0</span>
+      <span><img src="/public/star.png" class="ml-1"></span>
+    </div>
+    <div class="stat flex items-center">
+      <span class="underline">Health:</span>
+       <span id="healthText" class="ml-2">100</span>
+      <span><img src="/public/heart.png" class="ml-1"></span>
+    </div>
+    <div class="stat flex items-center">
+      <span class="underline">Gold:</span>
+      <span id="goldText" class="ml-2">50</span>
+      <span><img src="/public/coin.png" class="ml-1"></span>
+    </div>
+  </div>
+  
+  
+  <div id="monsterStats">
+    <div class="stat">Monster Name: <div id="monsterName"></div></div>
+    <div class="stat">Health: <div id="monsterHealth"></div></div>
+  </div>
+  <div id="text">Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons bellow.</div>
+  <div id="controls" class="p-2 flex justify-center gap-5">
+    <button id="button1" class="button">Go to store</button>
+    <button id="button2" class="button">Go to cave</button>
+    <button id="button3" class="button">Fight dragon</button>
+  </div>
+</div>
+<script  src="script.js"></script>
+</body>
+
+</html>
