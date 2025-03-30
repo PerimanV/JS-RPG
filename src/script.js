@@ -4,7 +4,7 @@ let gold = 50;
 let currentWeapon = 0;
 let fighting;
 let monsterHealth;
-let inventory = ["stick"];
+let inventory = ["Stick"];
 
 const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
@@ -58,8 +58,26 @@ const locations = [
     {
         name: "fight",
         "button text": ["Attack","Dodge","Run"],
-        "button functions": [Attacck,Dodge,goTown],
+        "button functions": [Attack,Dodge,goTown],
         text: "You are fighting a monster!"
+    },
+    {
+        name: "kill monster",
+        "button text": ["Back to Town Square","Back to Town Square","Back to Town Square"],
+        "button functions": [goTown,goTown,goTown],
+        text: "The monster screams as it dies. You gain XP and find gold."
+    },
+    {
+        name: "lose",
+        "button text": ["REPLAY?","REPLAY?","REPLAY?"],
+        "button functions": [restart,restart,restart],
+        text: "YOU DIED ☠️"
+    },
+    {
+        name: "win",
+        "button text": ["REPLAY?","REPLAY?","REPLAY?"],
+        "button functions": [restart,restart,restart],
+        text: "YOU KILLED THE DRAGON. YOU WIN !"
     }
 ];
 
@@ -89,6 +107,8 @@ button3.onclick = fightDragon;
 
 function update(locations) {
 
+    monsterStats.style.display = "none";
+
     button1.innerText = locations["button text"][0];
     button2.innerText = locations["button text"][1];
     button3.innerText = locations["button text"][2];
@@ -97,7 +117,7 @@ function update(locations) {
     button2.onclick = locations["button functions"][1];
     button3.onclick = locations["button functions"][2];
 
-    text.innerText = locations.text;
+    text.innerText = " " + locations.text;
 }
 
 function goTown() {
@@ -165,20 +185,20 @@ function sellWeapon() {
 
 function fightSlime() {
     fighting = 0;
-    goFight(fighting);
+    goFight();
 }
 
 function fightBeast() {
     fighting = 1;
-    goFight(fighting);
+    goFight();
 }
 
 function fightDragon() {
     fighting = 2;
-    goFight(fighting);
+    goFight();
 }
 
-function goFight(fighting) {
+function goFight() {
     update(locations[3]);
     monsterHealth = monsters[fighting].health;
     monsterStats.style.display = "block";
@@ -186,14 +206,79 @@ function goFight(fighting) {
     monsterHealthText.innerText = monsterHealth;
 }
 
-function Attack(fighting) {
+function Attack() {
     text.innerText = "The " + monsters[fighting].name + "attacks!";
-    text.innerText = "TYou attack it with your " + weapons.[currentWeapon].name + "!";
-    health -= monsters[fighting].level;
-    monsterHealth -= weapons.[currentWeapon].power + Math.floor(Math.random() * xp) ;
+    text.innerText = "You attack it with your " + weapons[currentWeapon].name + "!";
+    if (isMonsterHit())
+    {
+        health -= getMonsterAttackValue(monsters[fighting].level);
+    }
+    else {
+        text.innerText += "You missed.";
+    }
+    monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1 ;
+    healthText.innerText = health;
+    monsterHealthText.innerText = monsterHealth;
+
+    if(health <= 0) {
+        lose();
+    }
+    else if (monsterHealth <= 0) {
+        if (fighting === 2) {
+                winGame();
+            }
+            else {
+                defeatMonster();
+            }
+    }
+
+    //change for weapon to break, unless player has only 1 weapon
+    if (Math.random() <= 0.1 && inventory.length !== 1) {
+        text.innerText = "Your " + inventory.pop() + " breaks."
+        currentWeapon --;
+    }
 
 }
 
-function Dodge() {
+function getMonsterAttackValue(level) {
+    let hit = (level * 5) - (Math.floor(Math.random() * xp));
+    console.log(hit);
+    return hit;
+}
 
+//20% change to miss, if health < 20 player never misses
+function isMonsterHit() {
+    return Math.random() > 0.2 || health < 20;
+}
+
+function Dodge() {
+    text.innerText = "You dodged " + monsters[fighting].name + " attack."
+}
+
+function defeatMonster() {
+    gold += Math.floor(monsters[fighting].level * 6.7);
+    xp += monsters[fighting].level;
+    goldText.innerText = gold;
+    xpText.innerText = xp;
+    update(locations[4]);
+}
+
+function lose() {
+    update(locations[5]);
+}
+
+function winGame() {
+    update(locations[6]);
+}
+
+function restart() {
+    let xp = 0;
+    let health = 100;
+    let gold = 50;
+    let currentWeapon = 0;
+    let inventory = ["stick"];
+    goldText.innerText = gold;
+    healthText.innerText = health;
+    xpText.innerText = xp;
+    goTown();
 }
