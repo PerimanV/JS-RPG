@@ -33,6 +33,6 @@ body {
         @apply m-2 p-2 font-bold border border-black shadow-lg rounded flex items-center; 
     }
     .button {
-        @apply m-2 p-1 font-semibold  shadow-md rounded-md text-black border cursor-pointer ;
+        @apply m-2 p-3 font-semibold  shadow-md rounded-md text-black border cursor-pointer ;
     }
   }
