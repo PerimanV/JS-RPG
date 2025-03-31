@@ -21,6 +21,12 @@ body {
     padding: 5px;
     background-color: red;
   }
+
+  @layer base {
+    body {
+      @apply bg-cover bg-no-repeat;
+    }
+  }
   
   @layer components {
     .stat {
